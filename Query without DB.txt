@@ -10,3 +10,24 @@ when job_name ILIKE 'proficy_grr%' then 'PROFICY_GRR'
 when job_name ILIKE 'proficy_prd2%' then 'PROFICY'
 END AS SYSTEM_NAME,job_name,job_state,job_last_run_begin,job_last_run_end,job_num_retries
  from hvr_job where job_name not in('ese_cust_acc-cap-esep','esepk_cust_a-cap-esep','esepk_cust_a-integ-kafka','ese_rds_new-cap-eserp','ese_cust_acc-shrt_itm-esep-fl_eh','ese_cust_acc-full_ld-esep-fl_eh','hvrstats','esepk-cap-esep','esepk-integ-kafka','ese_rds_new-integ-fl_er','ese_cust_acc-integ-filee','ese_cust_acc-cap-eserp','ese_cust_acc-integ-fl_eh','esepk_cust_a-refr-esep-kafka','eoa_prod_gp5-integ-filer','ese_prod_gp-fmi_task-esep-fl_eh','proficy_prd2-integ-filep','eoa_prod_gp6-integ-filer','ese_prod_gp-integ-filee','ese_prod_gp-cap-esep','ese_prod_gp-refr_evo-eserp-fl_eh','ese_prod_gp-ref_loco-eserp-fl_eh','ese_prod_gp-ref_loco-esep-fl_eh','ese_prod_gp-refill-esep-fl_eh','ese_prod_gp-evo-esep-fl_eh') order by system_name;
+
+======================UPDATED QUERY=======================================================================================
+select
+ case  
+when job_name ILIKE 'eoa_prod_gp%' then 'RMD' 
+when job_name ILIKE 'ese_prod_gp%' then 'ESERVICE'
+when job_name ILIKE 'odw_prod%' then 'ODW'
+when job_name ILIKE 'odw_s_prod%' then 'ODW'
+when job_name ILIKE 'proficy_grr%' then 'PROFICY_GRR'
+when job_name ILIKE 'proficy_prd2%' then 'PROFICY'
+END AS SYSTEM_NAME,
+case  
+when job_name ILIKE '%cap%' then 'CAPTURE' 
+when job_name ILIKE '%inte%' then 'INTEGRATION'
+when job_name ILIKE '%ref%' OR  job_name IN ('odw_prod-up_part-odwp-fl_oh','odw_prod-svc_lms-odwp-fl_oh')  then 'REFRESH'
+END AS JOB_TYPE,
+job_name,job_state,job_last_run_begin,job_last_run_end,job_num_retries
+ from hvr_job where job_name not in('ese_cust_acc-cap-esep','esepk_cust_a-cap-esep','esepk_cust_a-integ-kafka','ese_rds_new-cap-eserp','ese_cust_acc-shrt_itm-esep-fl_eh','ese_cust_acc-full_ld-esep-fl_eh','hvrstats','esepk-cap-esep','esepk-integ-kafka','ese_rds_new-integ-fl_er','ese_cust_acc-integ-filee','ese_cust_acc-cap-eserp','ese_cust_acc-integ-fl_eh','esepk_cust_a-refr-esep-kafka','eoa_prod_gp5-integ-filer','ese_prod_gp-fmi_task-esep-fl_eh','proficy_prd2-integ-filep','eoa_prod_gp6-integ-filer','ese_prod_gp-integ-filee','ese_prod_gp-cap-esep','ese_prod_gp-refr_evo-eserp-fl_eh','ese_prod_gp-ref_loco-eserp-fl_eh','ese_prod_gp-ref_loco-esep-fl_eh','ese_prod_gp-refill-esep-fl_eh','ese_prod_gp-evo-esep-fl_eh') order by system_name;
+
+
+===============================================================================================================================================
